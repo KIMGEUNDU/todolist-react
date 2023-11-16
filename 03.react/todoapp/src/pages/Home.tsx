@@ -1,10 +1,12 @@
-import 'styles/Home.css';
-import { useState } from 'react';
 import { CategoryMenu, MainList } from '@/component/index.tsx';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import 'styles/Home.css';
 export default function Home() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<string>('');
+
+
   return (
     <>
       <div id="page">

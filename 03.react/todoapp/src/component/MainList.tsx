@@ -1,31 +1,40 @@
-import defaultInstance from '@/axios';
-import { AxiosResponse } from 'axios';
-
 import { ListItem } from '@/component';
+import { useTodoList } from '@/store/TodoList';
 import { useEffect, useState } from 'react';
-const getData = async () => {
-  try {
-    const response: AxiosResponse = await defaultInstance.get(`/todolist`);
-    return response.data?.items;
-  } catch (e) {
-    console.error(e);
-  }
-};
+// const getData = async () => {
+//   try {
+//     const response: AxiosResponse = await defaultInstance.get(`/todolist`);
+//     return response.data?.items;
+//   } catch (e) {
+//     console.error(e);
+//   }
+// };
 
 export const MainList = ({ selected }: { selected: string }) => {
   const [list, setList] = useState([]);
   //API
   const todo = selected === '📝 Todo';
   const done = selected === '✅ Done';
+  const {getAxios} = useTodoList()
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await getData();
+  //     setList(res);
+  //     return;
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getData();
-      setList(res);
-      return;
+    const fetchTodoList = async () => {
+      const response = await getAxios();
+      console.log(response);
     };
-    fetchData();
-  }, []);
+
+    fetchTodoList()
+  }, [getAxios]);
+
   return (
     <>
       <ul className="list-container">
