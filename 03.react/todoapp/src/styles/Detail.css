@@ -1,5 +1,4 @@
 main.detailMain {
-  background-color: #303037;
   padding: 25px;
   height: 100vh;
 }
@@ -23,7 +22,7 @@ article.text {
   border-radius: 16px 16px 0 0;
   font-size: 1.5rem;
   padding: 32px 25px;
-  background-color: #b1f3de;
+  background-color: #f2d6a2;
   border: none;
   outline: none;
 }
@@ -34,7 +33,7 @@ article.text {
   font-size: 1rem;
   font-weight: bold;
   padding: 12px 25px;
-  background-color: #b1f3de;
+  background-color: #f2d6a2;
   border: none;
   outline: none;
   resize: none;
@@ -48,7 +47,7 @@ article.dateCheck {
 }
 
 p.updatedDate {
-  color: wheat;
+  color: #86a45b;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -127,7 +126,7 @@ button#remove:hover {
 }
 
 #toggle:checked ~ .toggleSwitch {
-  background: #288d8d;
+  background: #96c05b;
 }
 
 #toggle {

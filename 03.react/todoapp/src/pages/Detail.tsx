@@ -2,6 +2,7 @@ import defaultInstance from '@/axios';
 import BackArrow from '@/component/BackArrow';
 import Button from '@/component/Button';
 import TextInput from '@/component/TextInput';
+import Header from '@/layout/Header';
 import { useTodoList } from '@/store/TodoList';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -102,12 +103,13 @@ export default function Detail() {
   }, [_id, getTodo]);
 
   return (
-    <>
+    <div className="page">
+      <Header />
       <main className="detailMain">
         <section className="detailSection">
           <BackArrow />
           <article className="dateCheck">
-            <p className="updatedDate">{date.split(' ')[0]}</p>
+            <p className="updatedDate">🍒 {date.split(' ')[0]}</p>
             <input
               type="checkbox"
               onChange={() => isChecked()}
@@ -142,6 +144,6 @@ export default function Detail() {
           </article>
         </section>
       </main>
-    </>
+    </div>
   );
 }

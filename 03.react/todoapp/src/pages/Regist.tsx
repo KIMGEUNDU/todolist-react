@@ -1,6 +1,7 @@
 import BackArrow from '@/component/BackArrow';
 import Button from '@/component/Button';
 import TextInput from '@/component/TextInput';
+import Header from '@/layout/Header';
 import { useTodoList } from '@/store/TodoList';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -63,7 +64,8 @@ function handleRegist() {
   }
 
   return (
-    <>
+    <div className='page'>
+      <Header />
       <main className="registMain">
         <section className="registSection">
           <BackArrow />
@@ -90,6 +92,6 @@ function handleRegist() {
           </article>
         </section>
       </main>
-    </>
+    </div>
   );
 }

@@ -4,5 +4,10 @@
 }
 
 body {
-  background-color: #288d8d;
+  background-color: #fff2d7;
+}
+
+.page {
+  min-width: 340px;
+  padding: 25px;
 }

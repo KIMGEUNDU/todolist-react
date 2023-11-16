@@ -1,17 +1,20 @@
+import { useDoneEdit } from '@/store/DoneEdit';
 import { useState } from 'react';
-import { Dispatch, SetStateAction } from 'react';
-export const CategoryMenu = ({
-  selector,
-}: {
-  selector: Dispatch<SetStateAction<string>>;
-}) => {
+
+export const CategoryMenu = () => {
   const [active, setActive] = useState('');
-  const filters = ['📋 All', '📝 Todo', '✅ Done'];
+  const {sort, setSort, setSelected} = useDoneEdit()
+
+  const filters = ['📋 All', '📝 Todo', '✅ Done', sort ? '↑ Sort' : '↓ Sort'];
+
   const handleClick: React.MouseEventHandler<HTMLLIElement> = (e) => {
     const current = e.currentTarget.textContent || '';
-    // if()
-    selector(current);
-    setActive(current);
+
+    if(current === '↑ Sort' || current === '↓ Sort'){
+      setSort(!sort)
+    }
+      setSelected(current);
+      setActive(current);
   };
   return (
     <>

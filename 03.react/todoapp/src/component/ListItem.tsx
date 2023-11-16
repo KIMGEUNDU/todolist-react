@@ -1,3 +1,4 @@
+import { useDoneEdit } from '@/store/DoneEdit';
 import { useTodoList } from '@/store/TodoList';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,9 +7,12 @@ import { Link } from 'react-router-dom';
 export const ListItem = ({ _id, updatedAt, title, done }: TodoListMain) => {
   const [isDone, setIsDone] = useState(false);
   const { patchTodo } = useTodoList()
+  const { edit, setEdit } = useDoneEdit();
 
   const handleCheck = () => {
     setIsDone(!isDone);
+
+    setEdit(!edit)
 
     patchTodo(`${_id}`, {
       done: !isDone,
@@ -17,7 +21,7 @@ export const ListItem = ({ _id, updatedAt, title, done }: TodoListMain) => {
 
   useEffect(() => {
     setIsDone(done);
-  }, []);
+  }, [done]);
   
   return (
     <>
