@@ -1,34 +1,36 @@
+import { useTodoList } from '@/store/TodoList';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import defaultInstance from '@/axios';
+
+
 export const ListItem = ({ _id, updatedAt, title, done }: TodoListMain) => {
   const [isDone, setIsDone] = useState(false);
-  const handleCheck = async () => {
+  const { patchTodo } = useTodoList()
+
+  const handleCheck = () => {
     setIsDone(!isDone);
-    // API
-    await defaultInstance.patch(`/todolist/${_id}`, {
+
+    patchTodo(`${_id}`, {
       done: !isDone,
     });
   };
 
-  // USEEFFECT
   useEffect(() => {
     setIsDone(done);
   }, []);
+  
   return (
     <>
-      <li>
-        <Link to={`info/${_id}`} className={`list-item ${done ? 'done' : ''}`}>
-          <div>
-            <input
-              className="list-item__check"
-              type="checkbox"
-              id={String(_id)}
-              checked={isDone}
-              onChange={handleCheck}
-            />
-            <label className="list-item__title">{title}</label>
-          </div>
+      <li className="list-item__container">
+        <input
+          className="list-item__check"
+          type="checkbox"
+          id={String(_id)}
+          checked={isDone}
+          onChange={handleCheck}
+        />
+        <Link to={`info/${_id}`} className={`list-item ${isDone ? 'done' : ''}`}>
+          <label className="list-item__title">{title}</label>
           <p className="list-item__date">{updatedAt.slice(0, 11)}</p>
         </Link>
       </li>

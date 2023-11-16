@@ -3,6 +3,8 @@ import Button from '@/component/Button';
 import TextInput from '@/component/TextInput';
 import { useTodoList } from '@/store/TodoList';
 import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import 'styles/Detail.css';
 import 'styles/Regist.css';
 
@@ -10,7 +12,8 @@ export default function Regist() {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const {postTodo} = useTodoList()
+  const { postTodo } = useTodoList()
+  const navigate = useNavigate()
 
   function handleTitle(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.value === '') {
@@ -44,19 +47,19 @@ export default function Regist() {
     }
   }
 
-  async function handleRegist() {
-    if (title === '' || content === '') {
-      alert('할 일과 내용을 입력해주세요');
-      return;
-    }
+function handleRegist() {
 
     const addTodo = {
       title, content, done: false
     }
 
-    await postTodo(addTodo);
+    postTodo(addTodo);
+
+    toast('등록되었습니다.', {
+      icon: '☺️',
+    });
     
-    location.href = '/';
+    navigate('/');
   }
 
   return (

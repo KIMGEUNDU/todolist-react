@@ -17,7 +17,7 @@ export const MainList = ({ selected }: { selected: string }) => {
     };
 
     todoList()
-  }, [getAxios]);
+  }, []);
 
   return (
     <>

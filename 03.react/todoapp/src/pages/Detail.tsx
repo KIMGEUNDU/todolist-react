@@ -3,9 +3,9 @@ import BackArrow from '@/component/BackArrow';
 import Button from '@/component/Button';
 import TextInput from '@/component/TextInput';
 import { useTodoList } from '@/store/TodoList';
-import Selector from '@/utils/Selector';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useParams, useNavigate } from 'react-router';
 import 'styles/Detail.css';
 
 const initialData = {
@@ -23,57 +23,66 @@ export default function Detail() {
   const [content, setContent] = useState(initialData.content);
   const [done, setDone] = useState(initialData.done);
   const [date, setDate] = useState(initialData.updateAt);
-  const [originalTitle, setOriginalTitle] = useState('');
-  const [originalContent, setOriginalContent] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const originalTitle = useRef('')
+  const originalContent = useRef('')
+  const navigate = useNavigate()
 
 
 
   function checkModifyTitle(e: ChangeEvent<HTMLInputElement>) {
-    const content = Selector('#content')
+    setTitle(e.target.value);
 
-    if (originalTitle === e.target.value && content === originalContent) {
+    if (originalTitle.current === e.target.value && content === originalContent.current || e.target.value === '') {
       setBtnDisabled(true);
-    } else if (e.target.value !== undefined && title !== e.target.value) {
-      setTitle(e.target.value);
+    } else if (e.target.value !== '' && originalTitle.current !== e.target.value) {
       setBtnDisabled(false);
     }
   }
 
   function checkModifyContent(e: ChangeEvent<HTMLTextAreaElement>) {
-    const title = Selector('#title')
+    setContent(e.target.value);
 
-    if (originalContent === e.target.value && title === originalTitle) {
+    if (originalContent.current === e.target.value && title === originalTitle.current || e.target.value === '') {
       setBtnDisabled(true);
-    } else if (e.target.value !== undefined && content !== e.target.value) {
-      setContent(e.target.value);
+    } else if (e.target.value !== '' && originalContent.current !== e.target.value) {
       setBtnDisabled(false);
     }
   }
 
-  const editTodo = {
-    title,
-    content
-  }
-
   async function handleModifyBtn() {
+    const editTodo = {
+      title,
+      content
+    }
+
     patchTodo(`${_id}`, editTodo)
-    alert('수정되었습니다.');
-    location.href = '/';
+
+    toast('수정되었습니다.', {
+      icon: '✍🏻',
+    });
+
+    navigate('/');
   }
 
   async function handleDeleteBtn() {
     const confirmDelete = confirm('삭제하시겠습니까?');
+
     if (confirmDelete) {
       await defaultInstance.delete(`/todolist/${_id}`);
-      alert('삭제되었습니다.');
-      location.href = '/';
+
+      toast('삭제되었습니다.', {
+				icon: '🗑️',
+			});
+
+      navigate('/');
     }
   }
 
   const isChecked = async () => {
     setDone(!done);
-    await defaultInstance.patch(`/todolist/${_id}`, {
+    
+    patchTodo(`${_id}`, {
       done: !done,
     });
   };
@@ -83,14 +92,14 @@ export default function Detail() {
       const { title, done, content, updatedAt } = await getTodo(`${_id}`);
 
       setTitle(title);
-      setOriginalTitle(title);
       setContent(content);
-      setOriginalContent(content);
       setDate(updatedAt);
       setDone(done);
+      originalTitle.current = title;
+      originalContent.current = content;
     };
     TodoInfo();
-  }, []);
+  }, [_id, getTodo]);
 
   return (
     <>
