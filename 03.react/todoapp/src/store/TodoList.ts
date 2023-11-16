@@ -4,18 +4,21 @@ import defaultInstance from '@/axios';
 
 
 export const useTodoList = create(() => ({
-  async getAxios() {
-    const response = await defaultInstance.get('/todolist');
+  getAxios() {
+    const response = defaultInstance.get('/todolist');
     return response
   },
-  async getTodo(_id: number) {
+  async getTodo(_id: string) {
     const response = await defaultInstance.get(`/todolist/${_id}`);
-    return response
+    return response?.data.item
   },
-  async postTodo(obj: object): Promise<void> {
-    await defaultInstance.post('/todolist', obj)
+  postTodo(obj: object) {
+    defaultInstance.post('/todolist', obj)
   },
-  async deleteTodo(_id: number): Promise<void> {
-    await defaultInstance.delete(`/todolist/${_id}`)
+  deleteTodo(_id: string) {
+    defaultInstance.delete(`/todolist/${_id}`)
   },
+  patchTodo(_id: string, obj: object) {
+    defaultInstance.patch(`/todolist/${_id}`, obj)
+  }
 }));

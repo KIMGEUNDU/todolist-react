@@ -11,15 +11,12 @@ export default function Home() {
     <>
       <div id="page">
         <div id="content">
-          {/* 1. CATEGORY - displayCategory(ul - li) */}
           <CategoryMenu selector={setSelected} />
-          {/* 2. LIST(TODO) - listContainer(class=>list-container)   */}
           <MainList selected={selected} />
-          {/* 3. BTN - (class=>enrollment) */}
           <button
             className="enrollment"
             onClick={() => navigate('/regist')}
-          ></button>
+          />
         </div>
       </div>
     </>

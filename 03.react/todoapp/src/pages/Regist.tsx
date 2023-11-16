@@ -1,18 +1,16 @@
-import { useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router';
-import defaultInstance from '@/axios';
+import BackArrow from '@/component/BackArrow';
 import Button from '@/component/Button';
-import 'styles/Regist.css';
+import TextInput from '@/component/TextInput';
+import { useTodoList } from '@/store/TodoList';
+import { ChangeEvent, useState } from 'react';
 import 'styles/Detail.css';
+import 'styles/Regist.css';
 
 export default function Regist() {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const navigate = useNavigate();
-  const goBackArrow = () => {
-    navigate(-1);
-  };
+  const {postTodo} = useTodoList()
 
   function handleTitle(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.value === '') {
@@ -52,11 +50,12 @@ export default function Regist() {
       return;
     }
 
-    await defaultInstance.post(`/todolist`, {
-      title,
-      content,
-      done: false,
-    });
+    const addTodo = {
+      title, content, done: false
+    }
+
+    await postTodo(addTodo);
+    
     location.href = '/';
   }
 
@@ -64,32 +63,19 @@ export default function Regist() {
     <>
       <main className="registMain">
         <section className="registSection">
-          <article className="arrow">
-            <button type="button" onClick={goBackArrow} className="backArrow">
-              <img src="/Arrow.svg" alt="뒤로 가기" />
-            </button>
-          </article>
-          <article className="text">
-            <input
-              type="text"
-              name="title"
-              id="registTitle"
-              className="titleRegist"
-              placeholder="할 일을 입력해주세요."
-              defaultValue={title}
-              onChange={handleTitle}
-              required
-            />
-            <textarea
-              name="content"
-              id="registContent"
-              className="contentRegist"
-              defaultValue={content}
-              onChange={handleContent}
-              placeholder="내용을 입력해주세요."
-              required
-            />
-          </article>
+          <BackArrow />
+          <TextInput  inputId="registTitle"
+            areaId="registContent"
+            inputClassName="titleRegist"
+            areaClassName="contentRegist"
+            inputValue={title}
+            textValue={content}
+            inputOnChange={handleTitle}
+            textOnChange={handleContent}
+            inputHolder="할 일을 입력해주세요."
+            textHolder="내용을 입력해주세요."
+            required={true}
+          />
           <article className="btnWrap">
             <Button
               id="registerBtn"
