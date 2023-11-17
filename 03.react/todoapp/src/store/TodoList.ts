@@ -10,13 +10,13 @@ export const useTodoList = create<TodoListType>(() => ({
     const response = await defaultInstance.get(`/todolist/${_id}`);
     return response?.data.item;
   },
-  postTodo(obj) {
-    defaultInstance.post('/todolist', obj);
+  async postTodo(obj) {
+    await defaultInstance.post('/todolist', obj);
   },
-  deleteTodo(_id) {
-    defaultInstance.delete(`/todolist/${_id}`);
+  async deleteTodo(_id) {
+    await defaultInstance.delete(`/todolist/${_id}`);
   },
-  patchTodo(_id, obj) {
-    defaultInstance.patch(`/todolist/${_id}`, obj);
+  async patchTodo(_id, obj) {
+    await defaultInstance.patch(`/todolist/${_id}`, obj);
   },
 }));

@@ -26,7 +26,7 @@
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 ### 상태관리 라이브러리
-<a href="https://zustand-demo.pmnd.rs/" target="_blank">
+<a href="https://zustand-demo.pmnd.rs/" target='_blank'>
 <img src="https://digital.interhyp.de/wp-content/uploads/2020/12/bear.png" width=200>
 </a>
 

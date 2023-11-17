@@ -60,7 +60,10 @@ function handleRegist() {
       icon: '☺️',
     });
     
-    navigate('/');
+    setTimeout(()=>{
+      navigate('/');
+    }, 300)
+
   }
 
   return (
