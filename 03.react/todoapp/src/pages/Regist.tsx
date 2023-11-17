@@ -63,7 +63,6 @@ function handleRegist() {
     setTimeout(()=>{
       navigate('/');
     }, 300)
-
   }
 
   return (

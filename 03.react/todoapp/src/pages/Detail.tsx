@@ -63,7 +63,9 @@ export default function Detail() {
       icon: '✍🏻',
     });
 
-    navigate('/');
+    setTimeout(()=>{
+      navigate('/');
+    }, 300)
   }
 
   async function handleDeleteBtn() {
