@@ -1,17 +1,3 @@
-interface TextInputType{
-  inputId:string,
-  areaId:string,
-  inputClassName:string,
-  areaClassName:string,
-  inputValue:string,
-  textValue:string,
-  inputOnChange:(e: React.ChangeEvent<HTMLInputElement>)=>void,
-  textOnChange:(e: React.ChangeEvent<HTMLTextAreaElement>)=>void,
-  inputHolder?:string,
-  textHolder?:string,
-  required?:boolean
-}
-
 function TextInput({
   inputId,
   areaId,

@@ -1,6 +1,8 @@
-function debounce(callback: () => void, timeout: number = 300) {
+import { ChangeEvent } from 'react';
+
+function debounce(callback: (e: ChangeEvent<HTMLInputElement>) => void, timeout: number = 100) {
   let cleanup: number | undefined;
-  return (...args: string[]) => {
+  return (...args: unknown[]) => {
     clearTimeout(cleanup);
     cleanup = setTimeout(callback.bind(null, ...args), timeout);
   };

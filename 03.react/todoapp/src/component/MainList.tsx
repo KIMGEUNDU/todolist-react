@@ -4,9 +4,9 @@ import { useTodoList } from '@/store/TodoList';
 import { useEffect, useState } from 'react';
 
 export const MainList = () => {
-  const { edit, selected } = useDoneEdit()
+  const { edit, selected, data, empty } = useDoneEdit()
   const { getAxios } = useTodoList()
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<TodoListMain[]>([]);
 
   const todo = selected === '📝 Todo';
   const done = selected === '✅ Done';
@@ -16,11 +16,18 @@ export const MainList = () => {
   useEffect(() => {
     const todoList = async () => {
       const response = await getAxios();
-      setList(response?.data.items)
+      setList(response)
     };
 
     todoList()
+
   }, [edit, getAxios]);
+
+  useEffect(()=>{
+    if(data.length > 0){
+      setList(data)
+    }
+  },[data])
 
   return (
     <>
@@ -30,6 +37,8 @@ export const MainList = () => {
           !done &&
           !sort &&
           !sortReversal &&
+          data.length === 0 &&
+          !empty &&
           list
             .sort(
               (a: TodoListMain, b: TodoListMain) =>
@@ -46,6 +55,8 @@ export const MainList = () => {
             ))}
         {list &&
           todo &&
+          data &&
+          !empty &&
           list
             .sort(
               (a: TodoListMain, b: TodoListMain) =>
@@ -63,6 +74,7 @@ export const MainList = () => {
             ))}
         {list &&
           done &&
+          !empty &&
           list
             .sort(
               (a: TodoListMain, b: TodoListMain) =>
@@ -83,6 +95,7 @@ export const MainList = () => {
           !done &&
           !sortReversal &&
           sort &&
+          !empty &&
           list
             .sort(
               (a: TodoListMain, b: TodoListMain) =>
@@ -102,6 +115,7 @@ export const MainList = () => {
           !done &&
           !sort &&
           sortReversal &&
+          !empty &&
           list
             .sort(
               (a: TodoListMain, b: TodoListMain) =>
@@ -116,6 +130,28 @@ export const MainList = () => {
                 done={item.done}
               />
             ))}
+          {list &&
+          !todo &&
+          !done &&
+          !sort &&
+          !sortReversal &&
+          data.length > 0 &&
+          !empty &&
+          list
+            .sort(
+              (a: TodoListMain, b: TodoListMain) =>
+                +new Date(b.updatedAt) - +new Date(a.updatedAt)
+            )
+            .map((item: TodoListMain) => (
+              <ListItem
+                key={item._id}
+                _id={item._id}
+                title={item.title}
+                updatedAt={item.updatedAt}
+                done={item.done}
+              />
+            ))}
+            {empty && <p className="emptyResult">검색 결과가 없습니다 :（</p>}
       </ul>
     </>
   );

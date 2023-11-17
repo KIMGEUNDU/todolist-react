@@ -107,8 +107,8 @@ export default function Detail() {
       <Header />
       <main className="detailMain">
         <section className="detailSection">
-          <BackArrow />
           <article className="dateCheck">
+            <BackArrow />
             <p className="updatedDate">🍒 {date.split(' ')[0]}</p>
             <input
               type="checkbox"

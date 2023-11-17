@@ -1,10 +1,3 @@
-interface Button {
-  children: string;
-  id: string;
-  disabled?: boolean;
-  onClick(): void;
-}
-
 export default function Button({
   children,
   id,
